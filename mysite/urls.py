@@ -13,9 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.conf import settings
 from django.conf.urls import url
 from django.contrib import admin
+from django.contrib.auth import logout
+from django.urls import include, path
+from django.shortcuts import redirect
+
+def logout_view(request):
+    logout(request)
+    return redirect('index')
 
 urlpatterns = [
+    # Admin app
     url(r'^admin/', admin.site.urls),
+    # Google oauth2
+    path('', include('social_django.urls', namespace='social')),
+    path('logout/', logout_view, name="logout"),
+    # Labeler App
+    path('', include('labeler.urls')),
 ]

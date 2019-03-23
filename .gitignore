@@ -1,0 +1,6 @@
+.Python
+db.sqlite3
+__pycache__/
+*.pyc
+# Credentials
+secret.py
