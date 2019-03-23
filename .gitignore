@@ -4,3 +4,4 @@ __pycache__/
 *.pyc
 # Credentials
 secret.py
+static/

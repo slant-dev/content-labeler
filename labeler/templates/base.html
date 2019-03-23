@@ -1,24 +1,30 @@
+{% load sass_tags %}
+{% load static %}
+
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
 
-  <title>My fake blog!</title>
+  <title>slant</title>
 
   <link
     rel="stylesheet"
     href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
     integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
     crossorigin="anonymous">
+
+  <link rel="stylesheet" type="text/css" href="{% sass_src 'style.scss' %}">
+
 </head>
-  <body>
-      {% include 'nav.html' %}
-      <div class="container">
-        <div class="row justify-content-center">
-          <div class="col-10" style="margin-top: 20px">
-            {% block content %}
-            {% endblock %}
-          </div>
+<body>
+    {% include "nav.html" %}
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-10" style="margin-top: 20px">
+          {% block content %}
+          {% endblock %}
         </div>
-  </body>
+      </div>
+</body>
 </html>

@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load extras %}
+
+{% block content %}
+
+<div class="container">
+  <h1>Profile</h1>
+  <hr>
+  {% if user.first_name %}
+    <h3>{{ user.first_name }} {{user.last_name}}</h3>
+  {% endif %}
+  {{ user.email|gravatar:150 }}
+  <p>
+    <br><b>username:</b> {{ user.username}}
+    <br><b>email:</b> {{ user.email }}
+    <br><b>last login:</b> {{ user.last_login }}
+  </p>
+
+</div>
+<a class="btn btn-primary" href="{% url 'logout' %}">Logout</a>
+{% endblock %}
