@@ -22,3 +22,9 @@ def articles(request):
         articles=articles
     )
     return render(request, 'articles.html', params)
+
+def label_articles(request):
+    return render(request, 'label_articles.html')
+
+def label_sentences(request):
+    return render(request, 'label_sentences.html')

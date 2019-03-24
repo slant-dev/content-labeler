@@ -1,5 +1,4 @@
 {% load extras %}
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
   <a class="navbar-brand navbar-dark">slant</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,15 +12,22 @@
           <span class="sr-only">(current)</span>
         </a>
       </li>
-      <li {% if "/search" in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
-        <a class="nav-link" href="/">
-          Search
-        </a>
-      </li>
       {% if request.user.is_authenticated %}
-      <li {% if "/articles" in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+      <li {% if "/articles/" == request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
         <a class="nav-link" href="{% url 'articles' %}">
           Articles
+        </a>
+      </li>
+      <li {% if "/label/articles" in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+        <a class="nav-link"  href="{% url 'label_articles' %}">
+          <i class="fas fa-lightbulb"></i>
+          Label Articles
+        </a>
+      </li>
+      <li {% if "/label/sentences" in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+        <a class="nav-link" href="{% url 'label_sentences' %}">
+          <i class="fas fa-stream"></i>
+          Label Sentences
         </a>
       </li>
       {% endif %}
