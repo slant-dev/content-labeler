@@ -1,20 +1,20 @@
 <div class="card text-center article-card">
   <div class="card-body row">
-    <div {% if article.image_url %} class="col-10" {% endif %}>
-      <h5 class="card-title">{{ article.title }}</h5>
-      <h6 class="card-subtitle">{{ article.author}}</h6>
-      <p class="card-text">{{ article.content | truncatechars:1200 }}</p>
-      <p><b> {{ article.pub_date }} </b></p>
+    <div {% if article.image_url and not hideImage %} class="col-10" {% else %} class="col" {% endif %}>
+      <h5 class="card-title" field="title">{{ article.title }}</h5>
+      <h6 class="card-subtitle" field="author">{{ article.author}}</h6>
+      <p class="card-text" field="content">{{ article.content | truncatechars:1200 }}</p>
+      <p><b field="pub_date"> {{ article.pub_date }} </b></p>
       <p class="card-text">
         <small class="text-muted">
-          {{ article.source_name }} </small> |
-          <a href="{{article.url}}">Link</a>
+          <span field="source_name">{{ article.source_name }}</span>
+          <a href="{{article.url}}" field="url">(Link)</a>
         </small>
       </p>
     </div>
-    {% if article.image_url %}
+    {% if article.image_url and not hideImage %}
     <div class="col">
-      <img src="{{ article.image_url }}" />
+      <img field="image_url" src="{{ article.image_url }}" />
     </div>
     {% endif %}
   </div>

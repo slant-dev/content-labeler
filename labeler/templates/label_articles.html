@@ -7,9 +7,9 @@
 <script src="{% static 'article_labeler.js' %}"></script>
 
 <div class="container">
-    <h3> What topics apply to this article? </h3>
+    <h3 id="label-articles-header"> Which topics apply to this article? </h3>
 
-    {% include "components/article.html" with article=article %}
+    {% include "components/article.html" with article=article hideImage=True %}
 
     <button type="button" class="btn btn-primary" id="submit-topics">Submit</button>
 
