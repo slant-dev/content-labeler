@@ -1,7 +1,7 @@
 {% load extras %}
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand">slant</a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand navbar-dark">slant</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -18,6 +18,21 @@
           Search
         </a>
       </li>
+      {% if request.user.is_authenticated %}
+      <li {% if "/articles" in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+        <a class="nav-link" href="{% url 'articles' %}">
+          Articles
+        </a>
+      </li>
+      {% endif %}
+      {% if request.user.is_superuser %}
+      <li {% if "/statistics" in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+        <a class="nav-link" href="{% url 'statistics' %}">
+          Statistics
+        </a>
+      </li>
+      {% endif %}
+
     </ul>
   </div>
   {% if user.is_authenticated %}

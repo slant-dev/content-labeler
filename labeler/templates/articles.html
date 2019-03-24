@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load extras %}
+
+{% block content %}
+<div class="container">
+  {% for article in articles %}
+    {% include "components/article.html" with article=article %}
+  {% endfor %}
+</div>
+{% endblock %}

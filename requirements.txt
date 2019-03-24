@@ -1,0 +1,6 @@
+Django==2.1.5
+django-compressor
+django-sass-processor
+newsapi-python
+libsass
+social-auth-app-django

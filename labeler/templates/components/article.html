@@ -1,0 +1,21 @@
+<div class="card text-center article-card">
+  <div class="card-body row">
+    <div {% if article.image_url %} class="col-10" {% endif %}>
+      <h5 class="card-title">{{ article.title }}</h5>
+      <h6 class="card-subtitle">{{ article.author}}</h6>
+      <p class="card-text">{{ article.content | truncatechars:1200 }}</p>
+      <p><b> {{ article.pub_date }} </b></p>
+      <p class="card-text">
+        <small class="text-muted">
+          {{ article.source_name }} </small> |
+          <a href="{{article.url}}">Link</a>
+        </small>
+      </p>
+    </div>
+    {% if article.image_url %}
+    <div class="col">
+      <img src="{{ article.image_url }}" />
+    </div>
+    {% endif %}
+  </div>
+</div>
