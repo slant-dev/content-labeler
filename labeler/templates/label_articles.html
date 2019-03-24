@@ -3,12 +3,15 @@
 {% load static %}
 
 {% block content %}
+<script> var CSRF_TOKEN = '{{ csrf_token }}'; </script>
 <script src="{% static 'article_labeler.js' %}"></script>
 
 <div class="container">
-  <div class="jumbotron">
-      Article Labeler
-    <i class="fas fa-igloo"></i> <!-- this icon's 1) style prefix == fas and 2) icon name == igloo -->
-  </div>
+    <h3> What topics apply to this article? </h3>
+
+    {% include "components/article.html" with article=article %}
+
+    <button type="button" class="btn btn-primary" id="submit-topics">Submit</button>
+
 </div>
 {% endblock %}

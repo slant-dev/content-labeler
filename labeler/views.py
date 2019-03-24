@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.core import serializers
 from django.http import HttpResponse
+from django.shortcuts import render
 
 from .models import Article
+
+import random
 
 ''' Our HTML pages. '''
 def index(request):
@@ -23,8 +26,20 @@ def articles(request):
     )
     return render(request, 'articles.html', params)
 
+def get_next_article(user):
+    articles = Article.objects.order_by('pub_date').all()
+    return random.choice(articles)
+
 def label_articles(request):
-    return render(request, 'label_articles.html')
+    article = get_next_article(request.user)
+    if request.method == 'POST':
+        data = serializers.serialize('json', [article])
+        return HttpResponse(data, content_type="application/json")
+    else:
+        params = dict(
+            article=article
+        )
+        return render(request, 'label_articles.html', params)
 
 def label_sentences(request):
     return render(request, 'label_sentences.html')
