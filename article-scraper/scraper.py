@@ -1,9 +1,9 @@
 from datetime import datetime, timedelta
 
-from newsapi import NewsApiClient
+import newsapi
 from random import shuffle
 
-import argparse, pickle
+import argparse, gzip, pickle
 
 # Curate my news
 US_SOURCES = [ 'associated-press',
@@ -16,6 +16,15 @@ US_SOURCES = [ 'associated-press',
             'the-washington-post',
             'time',
             'usa-today',]
+
+API_KEYS = [
+    '704b8497442b49b8a5cb33f734034509',
+    'f43be2cf7376472392acfa364f33cbbe',
+    '403b6cea31734afca78176e258939a8d',
+    '64ef88763ada452ca5fc5c5ae8c7aecb',
+]
+
+
 
 # Folder for storage
 DATA_FOLDER = 'data'
@@ -38,15 +47,38 @@ def _dedupe_articles(articles):
         else:
             article_title_set.add(article['title'])
             deduped_articles.append(article)
-    print('Deduped {} articles down to {}'.format(len(articles), len(deduped_articles)))
+    print('Deduped {} articles down to {}.'.format(len(articles), len(deduped_articles)))
     return deduped_articles
 
 class NewsClient:
-    def __init__(self, api_key='f43be2cf7376472392acfa364f33cbbe'):
-        self.api_key = api_key
-        self.api = NewsApiClient(api_key=api_key)
+    def __init__(self):
+        self.api_key_index = 0
+        self.api_key = self.next_api_key()
+        self.api = newsapi.NewsApiClient(api_key=self.api_key)
+
+    def next_api_key(self):
+        if self.api_key_index >= len(API_KEYS):
+            raise Exception('Out of API keys for today')
+        else:
+            key = API_KEYS[self.api_key_index]
+            self.api_key_index += 1
+            return key
 
     ''' Main API functions. '''
+
+    def get_news_for_day(self, day, sources, page=1):
+        try:
+            return self.api.get_everything(sources=sources,
+                                         from_param=day,
+                                         to=day,
+                                         page=page,
+                                         language='en',
+                                         sort_by=SORT_KEY['popularity'])
+        except newsapi.newsapi_exception.NewsAPIException:
+            self.api_key = self.next_api_key()
+            self.api = newsapi.NewsApiClient(api_key=self.api_key)
+            return self.get_news_for_day(day, sources, page=page)
+
 
     def get_articles_for_date(self, day='2019-03-01'):
         # Get all articles from my sources (max 1000 articles per list anyway)
@@ -62,17 +94,11 @@ class NewsClient:
     ''' Helper functions, rarely called from outside the class. '''
 
     def get_todays_articles_recur(self, day, sources=None, page=1, max_articles=None):
-        # print(max_articles)
         if max_articles <= 0:
             return []
 
+        results = self.get_news_for_day(day, sources, page=page)
 
-        results = self.api.get_everything(sources=sources,
-                                         from_param=day,
-                                         to=day,
-                                         page=page,
-                                         language='en',
-                                         sort_by=SORT_KEY['popularity'])
         articles = results['articles']
         if max_articles:
             max_articles -= len(articles)
@@ -94,20 +120,21 @@ def validate_dates(start_date, end_date):
     date1 = datetime.strptime(start_date, '%Y-%m-%d')
     date2 = datetime.strptime(end_date,   '%Y-%m-%d')
     days_between = (date2 - date1).days
-    if days_between <= 0:
-        print ("Start day must be before end day")
+    if days_between < 0:
+        raise ValueError("Start day must be before end day")
     elif days_between > 365:
-        print ("Cannot grab more than one year's worth of data")
+        raise ValueError("Cannot grab more than one year's worth of data")
     return date1, date2
 
 def pickle_list(_list, filename):
-    with open(filename, 'wb') as f:
+    with gzip.open(filename, 'wb') as f:
         pickle.dump(_list, f)
 
 def grab_and_save_articles(start_date, end_date):
     news_client = NewsClient()
     date_obj = start_date
     while date_obj <= end_date:
+        print()
         date = date_obj.strftime('%Y-%m-%d')
         all_articles = []
         for source in US_SOURCES:

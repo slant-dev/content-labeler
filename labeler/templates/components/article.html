@@ -3,7 +3,7 @@
     <div {% if article.image_url and not hideImage %} class="col-10" {% else %} class="col" {% endif %}>
       <h5 class="card-title" field="title">{{ article.title }}</h5>
       <h6 class="card-subtitle" field="author">{{ article.author}}</h6>
-      <p class="card-text" field="content">{{ article.content | truncatechars:1200 }}</p>
+      <p class="card-text" field="content">{{ article.content }}</p>
       <p><b field="pub_date"> {{ article.pub_date }} </b></p>
       <p class="card-text">
         <small class="text-muted">

@@ -7,7 +7,7 @@ class Article(models.Model):
     title = models.CharField(max_length=140) # A headline can't be longer than a tweet, right?
     url = models.CharField(max_length=400)
     image_url = models.CharField(max_length=400, null=True)
-    content = models.CharField(max_length=1000, null=True)
+    content = models.TextField(null=True)
     pub_date = models.DateTimeField('date published')
 
     def __str__(self):
@@ -23,18 +23,7 @@ class Article(models.Model):
             'urlToImage', 'url']:
             if key not in json_obj:
                 json_obj[key] = None
-
-        for key in ['source']:
-            if key not in json_obj:
-                json_obj['key'] = dict(
-                    id=None, author=None
-                )
-        if 'name' not in json_obj['source']:
-            json_obj['source']['name'] = None
-
-        if 'id' not in json_obj['source']:
-            json_obj['source']['id'] = None
-
+                
         # print('source:', json_obj['source'])
         return Article(
             author = json_obj['author'],
