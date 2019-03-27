@@ -2,7 +2,7 @@ from django.core import serializers
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from .models import Article
+from .models import Article, Topic
 
 import random
 
@@ -37,7 +37,8 @@ def label_articles(request):
         return HttpResponse(data, content_type="application/json")
     else:
         params = dict(
-            article=article
+            article = article,
+            topics  = Topic.objects.all()
         )
         return render(request, 'label_articles.html', params)
 

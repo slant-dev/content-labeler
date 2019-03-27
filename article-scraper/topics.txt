@@ -1,0 +1,10 @@
+Business,      #7c4dff
+Entertainment, #ff5722
+Health,        #80bdff
+Science,       #343a40
+Sports,        #ffc107
+Technology,    #17a2b8
+Local,         #3f51b5
+U.S. News,     #6c757d
+U.S. Politics, #dc3545
+World,         #28a745

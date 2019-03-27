@@ -10,8 +10,32 @@
     <h3 id="label-articles-header"> Which topics apply to this article? </h3>
 
     {% include "components/article.html" with article=article hideImage=True %}
-
+    <div class="row" id="topic-box">
+    {% for topic in topics %}
+      <button type="button" class="btn btn-outline-primar col-2" id="topic-{{topic.name|cut:" "|cut:"."}}">
+        {{ topic.name }}
+      </button>
+      <style>
+        #topic-{{topic.name|cut:" "|cut:"."}} {
+          color:{{topic.color}};
+          border-color:{{topic.color}};
+          margin: 12px;
+        }
+        #topic-{{topic.name|cut:" "|cut:"."}}:hover {
+          background-color:{{topic.color}};
+          opacity: 0.3;
+          color: white;
+        }
+        .topic-{{topic.name|cut:" "|cut:"."}}-hover {
+          background-color:{{topic.color}};
+          color: white !important;
+          opacity: 1 !important;
+        }
+      </style>
+    {% endfor %}
+    </div>
+    <br>
+    <hr>
     <button type="button" class="btn btn-primary" id="submit-topics">Submit</button>
-
 </div>
 {% endblock %}

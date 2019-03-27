@@ -23,7 +23,7 @@ class Article(models.Model):
             'urlToImage', 'url']:
             if key not in json_obj:
                 json_obj[key] = None
-                
+
         # print('source:', json_obj['source'])
         return Article(
             author = json_obj['author'],
@@ -35,3 +35,11 @@ class Article(models.Model):
             image_url = json_obj['urlToImage'],
             pub_date = json_obj['publishedAt'],
         )
+
+class Topic(models.Model):
+    name = models.CharField(max_length=40)
+    color = models.CharField(max_length=12)
+
+    def __str__(self):
+        """ Returns a string representation of a Topic. """
+        return '{} ({})'.format(self.name, self.color)

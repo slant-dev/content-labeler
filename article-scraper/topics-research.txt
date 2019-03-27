@@ -1,0 +1,37 @@
+Google News:
+Business
+Entertainment
+Health / Medicine
+Science
+Sports
+Technology
+U.S. News / Local News
+U.S. Politics
+World News / World Politics
+
+CNN:
+Opinion?
+US
+World
+Politics
+Business
+Opinion
+Health
+Entertainment
+Style
+Travel
+Sports
+Video
+
+Fox News:
+US
+World
+Opinion
+Politics
+Entertainment
+Business
+Lifestyle
+TV
+Fox Radio
+Radio
+More
